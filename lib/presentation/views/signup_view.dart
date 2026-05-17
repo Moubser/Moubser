@@ -5,7 +5,6 @@ import '../../core/theme/app_colors.dart';
 import '../viewmodels/auth_viewmodel.dart';
 import '../viewmodels/base_viewmodel.dart';
 import 'login_view.dart';
-import 'home_view.dart';
 
 class SignUpView extends StatelessWidget {
   const SignUpView({super.key});
@@ -107,6 +106,13 @@ class _SignUpBody extends StatelessWidget {
                       ),
                       const SizedBox(height: 16),
                       _buildTextField(
+                        controller: vm.universityNumberController,
+                        hint: 'الرقم الجامعي',
+                        keyboardType: TextInputType.number,
+                        textDirection: TextDirection.ltr,
+                      ),
+                      const SizedBox(height: 16),
+                      _buildTextField(
                         controller: vm.passwordController,
                         hint: 'كلمة المرور',
                         obscure: vm.obscurePassword,
@@ -190,7 +196,7 @@ class _SignUpBody extends StatelessWidget {
                                           Navigator.pushAndRemoveUntil(
                                             context,
                                             MaterialPageRoute(
-                                              builder: (_) => const HomeView(),
+                                              builder: (_) => const LoginView(),
                                             ),
                                             (route) => false,
                                           );

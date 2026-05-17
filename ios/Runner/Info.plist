@@ -45,5 +45,21 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>نحتاج صلاحية المايكروفون لتلقي الأوامر الصوتية والتوجيه الصوتي.</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>نحتاج صلاحية التعرف على الصوت لتنفيذ الأوامر الصوتية وتحويلها إلى نص.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>نحتاج صلاحية الموقع للتحقق من تواجدك في القاعة الدراسية لتسجيل الحضور.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>نحتاج صلاحية الموقع في الخلفية لتقديم خدمة التنقل الذكي.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>نحتاج صلاحية الموقع لتقديم خدمات التنقل وتسجيل الحضور.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>نحتاج صلاحية الكاميرا للقارئ الذكي والتعرف على النصوص.</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>نحتاج صلاحية Face ID لتأكيد هويتك عند تسجيل الحضور.</string>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>نحتاج صلاحية البلوتوث للتواصل مع أجهزة الحضور.</string>
 </dict>
 </plist>

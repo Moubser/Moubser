@@ -11,6 +11,7 @@ class AuthViewModel extends BaseViewModel {
   final passwordController = TextEditingController();
   final fullNameController = TextEditingController();
   final phoneController = TextEditingController();
+  final universityNumberController = TextEditingController();
 
   bool _obscurePassword = true;
   bool get obscurePassword => _obscurePassword;
@@ -50,8 +51,15 @@ class AuthViewModel extends BaseViewModel {
     if (fullNameController.text.trim().isEmpty ||
         emailController.text.trim().isEmpty ||
         phoneController.text.trim().isEmpty ||
+        universityNumberController.text.trim().isEmpty ||
         passwordController.text.trim().isEmpty) {
       setError('يرجى تعبئة جميع الحقول');
+      return false;
+    }
+
+    final universityNumber = int.tryParse(universityNumberController.text.trim());
+    if (universityNumber == null || universityNumber <= 0) {
+      setError('يرجى إدخال رقم جامعي صحيح');
       return false;
     }
 
@@ -67,6 +75,7 @@ class AuthViewModel extends BaseViewModel {
         password: passwordController.text.trim(),
         fullName: fullNameController.text.trim(),
         phone: phoneController.text.trim(),
+        universityNumber: universityNumberController.text.trim(),
       );
       setState(ViewState.idle);
       return true;
@@ -76,7 +85,7 @@ class AuthViewModel extends BaseViewModel {
       return false;
     } catch (e) {
       debugPrint('Exception during signUp: $e');
-      setError('حدث خطأ غير متوقع. حاول مرة أخرى.');
+      setError(_mapSignUpError(e.toString()));
       return false;
     }
   }
@@ -94,11 +103,25 @@ class AuthViewModel extends BaseViewModel {
     return message;
   }
 
+  String _mapSignUpError(String message) {
+    if (message.contains('STUDENT_NOT_FOUND')) {
+      return 'الرقم الجامعي غير موجود في النظام';
+    }
+    if (message.contains('STUDENT_ALREADY_LINKED')) {
+      return 'الرقم الجامعي مرتبط بحساب آخر';
+    }
+    if (message.contains('STUDENT_LINK_FAILED')) {
+      return 'تعذر ربط الحساب بالرقم الجامعي';
+    }
+    return 'حدث خطأ غير متوقع. حاول مرة أخرى.';
+  }
+
   void clearControllers() {
     emailController.clear();
     passwordController.clear();
     fullNameController.clear();
     phoneController.clear();
+    universityNumberController.clear();
   }
 
   @override
@@ -107,6 +130,7 @@ class AuthViewModel extends BaseViewModel {
     passwordController.dispose();
     fullNameController.dispose();
     phoneController.dispose();
+    universityNumberController.dispose();
     super.dispose();
   }
 }

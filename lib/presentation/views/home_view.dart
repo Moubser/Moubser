@@ -4,6 +4,13 @@ import '../../core/theme/app_colors.dart';
 import '../../di/locator.dart';
 import '../../services/supabase_service.dart';
 import 'welcome_view.dart';
+import 'navigation_view.dart';
+import 'attendance_view.dart';
+import 'smart_reader_view.dart';
+import 'chat_view.dart';
+import 'sos_view.dart';
+import 'profile_view.dart';
+import '../widgets/voice_assistant_dialog.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -175,28 +182,28 @@ class HomeView extends StatelessWidget {
                         children: [
                           _buildServiceCard(
                             title: 'القارئ الذكي',
-                            icon: Icons.document_scanner_rounded,
-                            onTap: () {},
+                            icon: Icons.auto_stories_rounded,
+                            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const SmartReaderView())),
                           ),
                           _buildServiceCard(
                             title: 'الخريطة',
                             icon: Icons.map_rounded,
-                            onTap: () {},
+                            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const NavigationView())),
                           ),
                           _buildServiceCard(
                             title: 'الحضور',
                             icon: Icons.how_to_reg_rounded,
-                            onTap: () {},
+                            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const AttendanceView())),
                           ),
                           _buildServiceCard(
-                            title: 'الإشعارات',
-                            icon: Icons.notifications_active_rounded,
-                            onTap: () {},
+                            title: 'المحادثات',
+                            icon: Icons.chat_rounded,
+                            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const ChatView())),
                           ),
                           _buildServiceCard(
-                            title: 'المكتبة الرقمية',
-                            icon: Icons.menu_book_rounded,
-                            onTap: () {},
+                            title: 'طلب مساعدة',
+                            icon: Icons.sos_rounded,
+                            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const SosView())),
                           ),
                         ],
                       ),
@@ -228,8 +235,8 @@ class HomeView extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  _buildNavItem(Icons.person_outline_rounded, false),
-                  _buildNavItem(Icons.location_on_outlined, false),
+                  _buildNavItemTap(Icons.person_outline_rounded, false, () => Navigator.push(context, MaterialPageRoute(builder: (_) => const ProfileView()))),
+                  _buildNavItemTap(Icons.location_on_outlined, false, () => Navigator.push(context, MaterialPageRoute(builder: (_) => const NavigationView()))),
                   Transform.translate(
                     offset: const Offset(0, -15),
                     child: Container(
@@ -251,7 +258,7 @@ class HomeView extends StatelessWidget {
                         color: Colors.transparent,
                         child: InkWell(
                           borderRadius: BorderRadius.circular(50),
-                          onTap: () {},
+                          onTap: () => VoiceAssistantDialog.show(context),
                           child: const Icon(
                             Icons.mic,
                             color: AppColors.white,
@@ -261,8 +268,8 @@ class HomeView extends StatelessWidget {
                       ),
                     ),
                   ),
-                  _buildNavItem(Icons.chat_bubble_outline_rounded, false),
-                  _buildNavItem(Icons.home_rounded, true),
+                  _buildNavItemTap(Icons.chat_bubble_outline_rounded, false, () => Navigator.push(context, MaterialPageRoute(builder: (_) => const ChatView()))),
+                  _buildNavItemTap(Icons.home_rounded, true, () {}),
                 ],
               ),
             ),
@@ -330,17 +337,20 @@ class HomeView extends StatelessWidget {
     );
   }
 
-  Widget _buildNavItem(IconData icon, bool active) {
-    return Container(
-      padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: active ? AppColors.mintBg : Colors.transparent,
-        borderRadius: BorderRadius.circular(15),
-      ),
-      child: Icon(
-        icon,
-        color: active ? AppColors.primaryDark : AppColors.grey,
-        size: 28,
+  Widget _buildNavItemTap(IconData icon, bool active, VoidCallback onTap) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: active ? AppColors.mintBg : Colors.transparent,
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Icon(
+          icon,
+          color: active ? AppColors.primaryDark : AppColors.grey,
+          size: 28,
+        ),
       ),
     );
   }
